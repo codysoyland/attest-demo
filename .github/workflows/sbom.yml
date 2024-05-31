@@ -72,9 +72,18 @@ jobs:
           upload-release-assets: false
 
       - name: Upload SBOM attestation
-        uses: actions/attest-sbom@aaa2d0a82e0853a3aea99fcf632b9b61cdb534c2 # v1
+        id: attest
+        uses: actions/attest-sbom@bdehamer/skip-attestation-store
+        env:
+          INPUT_SKIP-ATTESTATION-STORE: 'true'
         with:
           subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           subject-digest: ${{ steps.build.outputs.digest }}
           sbom-path: ${{ inputs.image_tag }}.sbom.spdx.json
           push-to-registry: true
+
+      - name: Upload Attestation
+        uses: actions/upload-artifact@v4
+        with:
+          name: attestation.json
+          path: ${{ steps.attest.outputs.bundle-path }}
