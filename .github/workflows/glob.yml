@@ -24,7 +24,8 @@ jobs:
         uses: actions/attest@v1
         env:
           INPUT_PRIVATE-SIGNING: 'true'
+          NUM: '2'
         with:
-          subject-path: '**/artifact-*'
+          subject-path: '**/artifact-${{ env.NUM }}.bin'
           predicate-type: 'text/plain'
           predicate: '{}'
