@@ -29,3 +29,4 @@ jobs:
           subject-path: '**/artifact-${{ env.NUM }}.bin'
           predicate-type: 'text/plain'
           predicate: '{}'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
